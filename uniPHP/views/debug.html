@@ -1,0 +1,69 @@
+<html lang="zh">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title><?php echo $error['errStr']; ?></title>
+        <style type="text/css">
+            .t {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                color: #CC0000;
+            }
+            .c {
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 11px;
+                font-weight: normal;
+                color: #000000;
+                line-height: 18px;
+                text-align: center;
+                background-color: #FFFFEC;
+            }
+            .blod {
+                font-weight: bold;
+            }
+            table{
+                border-right:1px solid #CCCCCC;
+                border-bottom:1px solid #CCCCCC;
+            }
+            th,td{
+                border-left: 1px solid #CCCCCC;
+                border-top:1px solid #CCCCCC;
+                padding: 8px;
+            }
+            body {
+                background-color: #FFFFFF;
+                margin-top: 66px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <h2><span class="t"><?php echo $error['errStr']; ?></span></h2>
+            <p class="t"><?php echo $error['errFile']; ?> (<?php echo $error['errLine']; ?>)</p>
+            <?php if(count($trace)>0): ?>
+            <table style="margin: auto;">
+                <thead>
+                    <tr>
+                        <th class="c blod">No.</th>
+                        <th class="c blod">Function</th>
+                        <th class="c blod">Args</th>
+                        <th class="c blod">File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($trace as $k => $v): ?>
+                    <tr>
+                        <td class="c"><?php echo ($k+1); ?></td>
+                        <td class="c"><?php echo $v['function']; ?></td>
+                        <td class="c">
+                            <?php foreach($v['args'] as $kk => $vv): ?>
+                            <p><?php highlight_string(var_export($vv,true)); ?></p>
+                            <?php endforeach; ?>
+                        </td>
+                        <td class="c"><?php echo $v['file']; ?><?php echo $v['file']?' ('.$v['line'].') ':''; ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+            <?php endif; ?>
+        </div>
+    </body>
+</html>
