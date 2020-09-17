@@ -1,0 +1,20 @@
+{
+  "name": "qbit/uniphp",
+  "description": "A php framework.",
+  "homepage": "http://www.uniphp.cn/",
+  "authors": [
+    {
+      "name": "Qbit",
+      "email": "i@qnb.cm"
+    }
+  ],
+  "require": {
+    "php": ">=7.4.0",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "files": [
+      "./uniPHP.php"
+    ]
+  }
+}
