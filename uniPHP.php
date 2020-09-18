@@ -159,20 +159,23 @@ class uniPHP
     protected function loadConfig()
     {
         //default
-        $this->config = require_once __DIR__.'/config/config.php';
+        $config = require_once __DIR__.'/config/config.php';
+        if (is_array($config)){
+            $this->config = $config;
+        }
         //APP
         $appConfigFile = $this->CONF_DIR.'/app.php';
         if (file_exists($appConfigFile)){
-            $appConfig = require_once $appConfigFile;
-            $this->config = array_merge($this->config,$appConfig);
+            $config = require_once $appConfigFile;
+            $this->config = array_merge($this->config,is_array($config)?$config:[]);
         }
         //module
         $moduleConfigFile = $this->CONF_DIR.'/'.$this->MODULE_NAME.'.php';
         if (file_exists($moduleConfigFile)){
-            $moduleConfig = require_once $moduleConfigFile;
-            $this->config = array_merge($this->config,$moduleConfig);
+            $config = require_once $moduleConfigFile;
+            $this->config = array_merge($this->config,is_array($config)?$config:[]);
         }
-        unset($appConfig,$moduleConfig);
+        unset($config,$appConfigFile,$moduleConfigFile);
     }
 
     /**

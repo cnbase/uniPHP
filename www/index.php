@@ -9,5 +9,4 @@ $uniPHP = new uniPHP([
     'ROUTE_DIR' =>  __DIR__.'/../route',
     'MODULE_NAME'   =>  'index',
 ]);
-$uniPHP = new uniPHP();
 $uniPHP->onBeforeCreate(function (){echo 'onBeforeCreate<br>';})->onCreated(function (){echo '<br>onCreated';})->run();
