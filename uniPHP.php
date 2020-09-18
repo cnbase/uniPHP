@@ -2,6 +2,12 @@
 class uniPHP
 {
     /**
+     * 框架版本号
+     * @var string
+     */
+    public static string $version = '1.1.0';
+
+    /**
      * 框架根目录
      * @var string
      */
