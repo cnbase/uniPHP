@@ -47,7 +47,7 @@ class Router
      * 404错误页面模板
      * @var string
      */
-    protected $notFoundFile = __DIR__.'/../views/404.html';
+    protected string $notFoundFile = __DIR__.'/../views/404.html';
 
     /**
      * Router constructor.
