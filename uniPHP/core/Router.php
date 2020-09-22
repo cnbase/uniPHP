@@ -143,7 +143,7 @@ class Router
     {
         $rawPath = $this->path;
         if (strpos($rawPath,'/'.$this->entryFile) === 0){
-            $lowerPath = strtolower(substr($rawPath,strlen('/'.$this->entryFile)));
+            $lowerPath = '/'.ltrim(strtolower(substr($rawPath,strlen('/'.$this->entryFile))),'/');
         } else {
             $lowerPath = strtolower($this->path);
         }
