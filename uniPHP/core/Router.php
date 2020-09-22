@@ -52,6 +52,26 @@ class Router
     }
 
     /**
+     * 批量添加路由
+     * @param array $routes
+     * @return $this
+     * @throws \ErrorException
+     */
+    public function addRoutes(array $routes = [])
+    {
+        if (!$routes){
+            return $this;
+        }
+        foreach ($routes as $route){
+            if (!isset($route['method']) || !isset($route['path']) || !isset($route['callback'])){
+                throw new \ErrorException('路由配置错误');
+            }
+            $this->addRoute($route['method'],$route['path'],$route['callback'],$route['isRegular']?true:false);
+        }
+        return $this;
+    }
+
+    /**
      * 新增路由规则
      * $isRegular false:字符串匹配 true:正则匹配
      * @param string $method
@@ -61,7 +81,7 @@ class Router
      * @return $this
      * @throws \ErrorException
      */
-    public function add(string $method,string $patterns,callable $callback,bool $isRegular = false)
+    public function addRoute(string $method,string $patterns,callable $callback,bool $isRegular = false)
     {
         if (!$method || !$patterns || !$callback){
             throw new \ErrorException('Add route fail '.($method?'`'.$method.'`':''));
@@ -97,7 +117,7 @@ class Router
         if (count($arguments) < 2){
             throw new \ErrorException('Add route fail '.($method?'`'.$method.'`':''));
         }
-        $this->add($method,...$arguments);
+        $this->addRoute($method,...$arguments);
     }
 
     // 路由监视

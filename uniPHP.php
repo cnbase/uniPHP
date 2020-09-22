@@ -5,7 +5,7 @@ class uniPHP
      * 框架版本号
      * @var string
      */
-    public static string $version = '1.1.0';
+    public static string $version = '1.2.0';
 
     /**
      * 框架根目录
@@ -127,6 +127,10 @@ class uniPHP
         return $this;
     }
 
+    /**
+     * 框架开始执行
+     * @throws ErrorException
+     */
     public function run()
     {
         //前置函数
@@ -134,8 +138,8 @@ class uniPHP
             call_user_func($this->beforeCreate);
         }
         //路由解析
-        $this->loadRoute();
-        \uniPHP\core\Router::instance()->dispatch();
+        $routes = $this->loadRoute();
+        \uniPHP\core\Router::instance()->addRoutes($routes)->dispatch();
         //后置函数
         if (is_callable($this->created)){
             call_user_func($this->created);
@@ -144,19 +148,22 @@ class uniPHP
 
     /**
      * 加载路由配置
+     * @return array
      */
     protected function loadRoute()
     {
+        $route = [];
         //app route
         $appRouteFile = $this->ROUTE_DIR.'/app.php';
-        if (file_exists($appRouteFile)){
-            require_once $appRouteFile;
+        if (file_exists($appRouteFile) && ($config = require_once $appRouteFile) && is_array($config)){
+            $route = array_merge($route,$config);
         }
         $moduleRouteFile = $this->ROUTE_DIR.'/'.$this->MODULE_NAME.'.php';
-        if (file_exists($moduleRouteFile)){
-            require_once $moduleRouteFile;
+        if (file_exists($moduleRouteFile) && ($config = require_once $moduleRouteFile) && is_array($config)){
+            $route = array_merge($route,$config);
         }
-        unset($appRouteFile,$moduleRouteFile);
+        unset($appRouteFile,$moduleRouteFile,$config);
+        return $route;
     }
 
     /**
