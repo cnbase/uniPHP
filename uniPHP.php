@@ -5,7 +5,7 @@ class uniPHP
      * 框架版本号
      * @var string
      */
-    public static string $version = '1.2.2';
+    public static string $version = '1.2.3';
 
     /**
      * 框架根目录
