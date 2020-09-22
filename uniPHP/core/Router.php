@@ -8,6 +8,12 @@ class Router
     use InstanceTrait;
 
     /**
+     * 入口文件
+     * @var string
+     */
+    protected string $entryFile = 'index.php';
+
+    /**
      * 请求方法
      * @var string
      */
@@ -41,7 +47,7 @@ class Router
      * 404错误页面模板
      * @var string
      */
-    protected $notFoundFile = __DIR__.'/../views/404.html';
+    protected string $notFoundFile = __DIR__.'/../views/404.html';
 
     /**
      * Router constructor.
@@ -49,6 +55,18 @@ class Router
     public function __construct(){
         $this->method = strtoupper($_SERVER['REQUEST_METHOD']);
         $this->path = strpos($_SERVER['REQUEST_URI'],'?')===false?$_SERVER['REQUEST_URI']:substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],'?'));
+        $this->path = '/'.ltrim($this->path,'/');
+    }
+
+    /**
+     * 入口文件名
+     * @param string $entryFile
+     * @return $this
+     */
+    public function setEntryFile(string $entryFile = '')
+    {
+        $this->entryFile = $entryFile;
+        return $this;
     }
 
     /**
@@ -104,7 +122,11 @@ class Router
     public function dispatch()
     {
         $rawPath = $this->path;
-        $lowerPath = strtolower($this->path);
+        if (strpos($rawPath,'/'.$this->entryFile) === 0){
+            $lowerPath = strtolower(substr($rawPath,strlen('/'.$this->entryFile)));
+        } else {
+            $lowerPath = strtolower($this->path);
+        }
         // 优先匹配具体request_method
         if (array_key_exists($this->method,$this->callbacks)){
             foreach ($this->callbacks[$this->method] as $pattern => $callback){

@@ -5,7 +5,7 @@ class uniPHP
      * 框架版本号
      * @var string
      */
-    public static string $version = '1.1.0';
+    public static string $version = '1.1.1';
 
     /**
      * 框架根目录
@@ -135,7 +135,11 @@ class uniPHP
         }
         //路由解析
         $this->loadRoute();
-        \uniPHP\core\Router::instance()->dispatch();
+        if (is_null($this->config['entryFile'])){
+            \uniPHP\core\Router::instance()->dispatch();
+        } else {
+            \uniPHP\core\Router::instance()->setEntryFile($this->config['entryFile'])->dispatch();
+        }
         //后置函数
         if (is_callable($this->created)){
             call_user_func($this->created);

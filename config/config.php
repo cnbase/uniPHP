@@ -1,5 +1,6 @@
 <?php
 return [
+    'entryFile' =>  'index.php',
     'timezone'  =>  'Asia/Shanghai',
     'debug'     =>  true,
     'trace'     =>  true,
