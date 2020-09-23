@@ -2,6 +2,7 @@
 include '../uniPHP.php';
 
 $uniPHP = new uniPHP([
+    'entryFile' =>  'index.php',
     'ROOT_DIR'  =>  __DIR__.'/../',
     'WEB_DIR'   =>  __DIR__,
     'APP_DIR'   =>  __DIR__.'/../app',

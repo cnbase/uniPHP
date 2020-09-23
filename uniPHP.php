@@ -5,7 +5,13 @@ class uniPHP
      * 框架版本号
      * @var string
      */
-    public static string $version = '1.2.3';
+    public static string $version = '1.2.4';
+
+    /**
+     * 入口文件
+     * @var string
+     */
+    protected string $entryFile = 'index.php';
 
     /**
      * 框架根目录
@@ -66,6 +72,7 @@ class uniPHP
      */
     public function __construct(array $option = []) {
         //初始化目录
+        isset($option['entryFile']) and $this->entryFile = $option['entryFile'];
         isset($option['ROOT_DIR']) and $this->ROOT_DIR = $option['ROOT_DIR'];
         isset($option['WEB_DIR']) and $this->WEB_DIR = $option['WEB_DIR'];
         isset($option['APP_DIR']) and $this->APP_DIR = $option['APP_DIR'];
@@ -139,11 +146,7 @@ class uniPHP
         }
         //路由解析
         $routes = $this->loadRoute();
-        if (is_null($this->config['entryFile'])){
-            \uniPHP\core\Router::instance()->addRoutes($routes)->dispatch();
-        } else {
-            \uniPHP\core\Router::instance()->setEntryFile($this->config['entryFile'])->addRoutes($routes)->dispatch();
-        }
+        \uniPHP\core\Router::instance()->setEntryFile($this->entryFile)->addRoutes($routes)->dispatch();
         //后置函数
         if (is_callable($this->created)){
             call_user_func($this->created);
