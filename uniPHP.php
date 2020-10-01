@@ -5,7 +5,7 @@ class uniPHP
      * 框架版本号
      * @var string
      */
-    public static string $version = '1.2.4';
+    public static string $version = '1.2.5';
 
     /**
      * 入口文件
@@ -67,6 +67,11 @@ class uniPHP
     protected $created;
 
     /**
+     * @var uniPHP $this
+     */
+    protected static self $instance;
+
+    /**
      * uniPHP constructor.
      * @param array $option
      */
@@ -93,6 +98,19 @@ class uniPHP
         } catch (\Throwable $e){
             exit($e->getMessage());
         }
+    }
+
+    /**
+     * 单例模式
+     * @param array $option
+     * @return uniPHP|static
+     */
+    public static function instance(array $option = [])
+    {
+        if (!(self::$instance instanceof self)){
+            self::$instance = new self($option);
+        }
+        return self::$instance;
     }
 
     /**
@@ -196,6 +214,26 @@ class uniPHP
             $this->config = array_merge($this->config,is_array($config)?$config:[]);
         }
         unset($config,$appConfigFile,$moduleConfigFile);
+    }
+
+    /**
+     * 获取配置项
+     * @param string $name
+     * @return mixed|null
+     */
+    public function getConfig(string $name)
+    {
+        return $this->config[$name]??null;
+    }
+
+    /**
+     * 设置配置项
+     * @param string $name
+     * @param $value
+     */
+    public function setConfig(string $name,$value)
+    {
+        $this->config[$name] = $value;
     }
 
     /**
