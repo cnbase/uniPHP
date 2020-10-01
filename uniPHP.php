@@ -67,7 +67,7 @@ class uniPHP
     protected $created;
 
     /**
-     * @var $this |null
+     * @var self|null
      */
     protected static ?self $instance = null;
 
