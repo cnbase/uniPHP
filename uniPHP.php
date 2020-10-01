@@ -5,7 +5,7 @@ class uniPHP
      * 框架版本号
      * @var string
      */
-    public static string $version = '1.2.7';
+    public static string $version = '1.2.8';
 
     /**
      * 入口文件
@@ -52,7 +52,7 @@ class uniPHP
      * 配置
      * @var array
      */
-    protected array $config;
+    protected array $config = [];
 
     /**
      * uniPHP run 前置回调函数
@@ -67,9 +67,9 @@ class uniPHP
     protected $created;
 
     /**
-     * @var uniPHP $this
+     * @var $this |null
      */
-    protected static self $instance;
+    protected static ?self $instance = null;
 
     /**
      * uniPHP constructor.
