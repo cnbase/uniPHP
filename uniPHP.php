@@ -5,7 +5,7 @@ class uniPHP
      * 框架版本号
      * @var string
      */
-    public static string $version = '1.2.8';
+    public static string $version = '1.2.9';
 
     /**
      * 入口文件
