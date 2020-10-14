@@ -106,12 +106,11 @@ class Template
     }
 
     /**
-     * 设置模板内容
      * @param string $tplAlias
-     * @param string $content
+     * @param string|null $content
      * @throws \ErrorException
      */
-    public function setText(string $tplAlias,string $content)
+    public function setText(string $tplAlias,?string $content)
     {
         if (!$tplAlias){
             throw new \ErrorException('[Template Error]$tplAlias cannot be empty.');
